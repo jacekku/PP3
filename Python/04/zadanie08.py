@@ -13,13 +13,13 @@ def create_matrix(y_size,x_size,key=0,key_args=[]):
 def transpose_matrix(matrix):
     y_size=len(matrix)
     x_size=len(matrix[0])
-    temp=create_matrix(y_size,x_size)
+    temp=create_matrix(x_size,y_size)
     for i in range(y_size):
         for j in range(x_size):
             temp[j][i]=matrix[i][j]
 
     return temp
-matrix=create_matrix(3,3,key=randint,key_args=[0,9])
+matrix=create_matrix(3,5,key=randint,key_args=[0,9])
 
 
 print(*matrix,sep="\n",end="\n\n")
