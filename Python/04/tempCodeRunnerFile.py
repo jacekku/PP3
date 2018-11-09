@@ -1,1 +1,1 @@
-u
+(len(largest_value))
