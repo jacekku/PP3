@@ -35,7 +35,7 @@ values=[
 max_value=max(*values)
 longest_name=len(max(*languages,key=len))
 max_graph_height=40 # arbitrary
-
+print("---Two Lists---")
 for i in range(len(languages)):
     percentage=int((values[i]/max_value)*max_graph_height)
     print(f'{languages[i].rjust(longest_name," ")}: {"#"*percentage} {values[i]}K')
@@ -44,3 +44,27 @@ for i in range(len(languages)):
 
 
 # dictionary implementation
+languages={
+    "Java":61,
+    "Python":47,
+    "JavaScript":37,
+    "C++":32,
+    "C#":26,
+    "Ruby":18,
+    "Perl":14,
+    "PHP":14,
+    "C":9,
+    "Android":7
+}
+
+
+max_value=max(*languages.values())
+longest_name=len(max(*languages.keys(),key=len))
+max_graph_height=40 # arbitrary
+
+
+print("---Dictionary---")
+
+for lang in languages:
+    percentage=int((languages[lang]/max_value)*max_graph_height)
+    print(f'{lang.rjust(longest_name," ")}: {"#"*percentage} {languages[lang]}K')
