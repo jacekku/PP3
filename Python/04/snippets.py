@@ -30,7 +30,18 @@ def create_matrix(y_size,x_size,key=0,key_args=[]):
             (key(*key_args) if callable(key) else key) for _ in range(x_size)
         ] for _ in range(y_size)
     ]
-    
+
+
+def copy_matrix(matrix):
+    y_size=len(matrix)
+    x_size=len(matrix[0])
+    temp=create_matrix(y_size,x_size)
+    for i in range(y_size):
+        for j in range(x_size):
+            temp[i][j]=matrix[i][j]
+    return temp
+
+
 def transpose_matrix(matrix):
     y_size=len(matrix)
     x_size=len(matrix[0])
@@ -60,9 +71,7 @@ def remove_row_col(matrix,row,col):
                 
     return temp
 
-def cofactor(i,j,val,matrix):
-    #                      two function recursion
-    return ((-1)**(i+j))*val*determinant(matrix)
+
 
 def determinant(matrix):
     if(len(matrix)!=len(matrix[0])):
@@ -74,11 +83,7 @@ def determinant(matrix):
         return matrix[0][0]*matrix[1][1] - (matrix[0][1]*matrix[1][0])
     det=0
     for j in range(size):
-        #two function recursion
-        det+=cofactor(  0,
-                        j,
-                        matrix[0][j],
-                        remove_row_col(matrix,0,j))
+        det+=((-1)**(0+j))*matrix[0][j]*determinant(remove_row_col(matrix,0,j))
     return det
 
 
@@ -109,3 +114,35 @@ def matrix_product(mat1,mat2):
         for j in range(product_x_size):
             product[i][j]=dot_product(get_row(mat1,i),get_col(mat2,j))
     return product
+
+
+def insert_row(dest_matrix,source_matrix,index):
+    """
+    Row insertion
+    """
+    temp=copy_matrix(dest_matrix)
+    temp[index]=[*source_matrix]
+    return temp
+
+def insert_col(dest_matrix,source_matrix,index):
+    """
+    Col insertion
+    """
+    dest_matrix=transpose_matrix(dest_matrix)
+    return transpose_matrix(insert_row(dest_matrix,source_matrix,index))
+
+def cramer(matrix,free):
+    W=determinant(matrix)
+    W1=determinant(insert_col(matrix,free,0))
+    W2=determinant(insert_col(matrix,free,1))
+    W3=determinant(insert_col(matrix,free,2))
+    if(W!=0):
+        x=W1/W
+        y=W2/W
+        z=W3/W
+        return (x,y,z)
+    if(W==0):
+        if(W1==0 or W2==0 or W3==0):
+            return None
+        if(W1==0 and W2==0 and W3==0):
+            return "INFINITE"
