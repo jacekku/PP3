@@ -13,5 +13,8 @@ def fib(n):
     return f
 
 
-print(fib(18))
+
+for i in range(20):
+    print(fib(i))
+
 print(fibs)
